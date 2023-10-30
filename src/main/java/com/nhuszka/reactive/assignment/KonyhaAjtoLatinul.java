@@ -32,7 +32,7 @@ public class KonyhaAjtoLatinul {
                 .doOnNext(mivan -> tanc.add(mivan))
                 .subscribe(System.out::println);
 
-        Util.waitFor(10);
+        Util.waitFor(5);
 
         boolean isAgressziv = tanc.contains("hasba rúgtalak");
         if (isAgressziv) {
