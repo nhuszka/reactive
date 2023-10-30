@@ -23,7 +23,9 @@ public class KonyhaAjtoLatinul {
     public static void main(String[] args) {
         Vector<String> tanc = new Vector<>();
 
-        System.out.println("Akkor ROPJUK!!");
+        System.out.println("Morfológus táncol Neonnal!");
+        Util.waitFor(1);
+        System.out.println("...akkor ROPJUK!!");
 
         Flux.interval(Duration.ofSeconds(1))
                 .parallel(8)
