@@ -3,7 +3,6 @@ package com.nhuszka.reactive;
 import com.nhuszka.reactive.util.Util;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
-import org.w3c.dom.ls.LSOutput;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -44,11 +43,11 @@ public class FluxDemo {
         Flux.fromStream(intStream)
                 .subscribe(System.out::println);
 
-        //Flux.fromStream(intStream)
-        //        .subscribe(System.out::println); // will not work!
+        Flux.fromStream(intStream)
+                .subscribe(System.out::println); // will not work!
 
         Flux.fromStream(() -> intList.stream())
-                .subscribe(System.out::println); // will not work!
+                .subscribe(System.out::println);
 
         // ---------- range + .log()
         Flux.range(3, 2)
