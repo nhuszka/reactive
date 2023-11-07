@@ -1,5 +1,6 @@
 package com.nhuszka.reactive.robots;
 
+import com.nhuszka.reactive.util.Util;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
@@ -19,21 +20,21 @@ public class RobotRectangular {
     private final AtomicReference<Direction> direction;
     private final Box box;
 
-    private final int movePerMillis;
     private final int moveDistance;
     private Disposable movement;
+    private final Flux<Long> movementTimer;
 
     public RobotRectangular(String name, Coordinates startingCoordinates, Direction initialDirection, Box box, int movePerMillis, int moveDistance) {
         this.name = name;
         this.coordinates = new AtomicReference<>(startingCoordinates);
         this.direction = new AtomicReference<>(initialDirection);
         this.box = box;
-        this.movePerMillis = movePerMillis;
         this.moveDistance = moveDistance;
+        this.movementTimer = Flux.interval(Duration.ofMillis(movePerMillis));
     }
 
     public void startMoving() {
-        movement = Flux.interval(Duration.ofMillis(movePerMillis))
+        movement = movementTimer
                 .doOnNext(timeToMove -> {
                     Direction currentDirection = direction.get();
                     Coordinates currentCoordinates = coordinates.get();
@@ -41,13 +42,14 @@ public class RobotRectangular {
                     direction.set(RectangularMovement.getDirection(moveDistance, currentCoordinates, currentDirection, box));
                     coordinates.set(RectangularMovement.move(moveDistance, currentCoordinates, currentDirection));
                 })
+                .doOnCancel(() -> log.info("Movement of robot " + name + " cancelled"))
                 .subscribe();
     }
 
-    public Flux<Coordinates> coordinates() {
-        return Flux.interval(Duration.ofMillis(movePerMillis))
+    public Flux<Coordinates> coordinatesFeed() {
+        return movementTimer
                 .takeUntil(coordinate -> isMovementStopped())
-                .map(movementEvent -> this.getCurrentPosition());
+                .map(timeToMove -> this.getCurrentPosition());
     }
 
     private boolean isMovementStopped() {

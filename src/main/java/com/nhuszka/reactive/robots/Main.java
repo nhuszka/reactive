@@ -26,15 +26,12 @@ public class Main {
 
         Flux.interval(Duration.ofMillis(1000))
                 .map(timeToPollPosition -> robotRectangular.getCurrentPosition())
-                .subscribe(position -> System.out.printf("queryPer1000 [x: %d, y: %d]%n", position.getX(), position.getY()));
-//
-        robotRectangular.coordinates()
-                .subscribe(
-                        position -> log.info(String.format("getting robot coordinates [x: %d, y: %d]%n", position.getX(), position.getY()))
-                );
+                .subscribe(position -> System.out.printf("poll position [x: %d, y: %d]%n", position.getX(), position.getY()));
 
-//        robotRectangular.reportPosition()
-//                .subscribe(currentPosition -> System.out.printf("reported Position [x: %d, y: %d]%n", currentPosition.getX(), currentPosition.getY()));
+        robotRectangular.coordinatesFeed()
+                .subscribe(
+                        position -> log.info(String.format("observe coordinates [x: %d, y: %d]%n", position.getX(), position.getY()))
+                );
 
         Util.waitFor(5);
 
