@@ -18,7 +18,7 @@ public class ChatRoom {
     public void joinRoom(Chatter chatter) {
         communicationChannel.asFlux()
                 .filter(message -> !message.getSenderName().equals(chatter.getUsername()))
-                .subscribe(chatter);
+                .subscribe(chatter.getMessageHandler());
         System.out.println("("+ chatter.getUsername() + " joined the room" + ")");
     }
 }
