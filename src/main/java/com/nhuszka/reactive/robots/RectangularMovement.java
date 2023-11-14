@@ -4,6 +4,13 @@ import static com.nhuszka.reactive.robots.Direction.*;
 
 public class RectangularMovement {
 
+    static boolean isWithinBox(Coordinates coordinate, Box box) {
+        return coordinate.getX() >= box.getBottomLeft().getX()
+                && coordinate.getX() <= box.getBottomRight().getX()
+                &&  coordinate.getY() >= box.getBottomLeft().getY()
+                &&  coordinate.getY() <= box.getTopLeft().getY();
+    }
+
     static Coordinates move(int distance, Coordinates coordinates, Direction direction) {
         int x = coordinates.getX();
         int y = coordinates.getY();

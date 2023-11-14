@@ -1,6 +1,6 @@
 package com.nhuszka.reactive.robots;
 
-import com.nhuszka.reactive.util.Util;
+import com.nhuszka.reactive.robots.exception.MovementException;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
@@ -39,8 +39,15 @@ public class RobotRectangular {
                     Direction currentDirection = direction.get();
                     Coordinates currentCoordinates = coordinates.get();
 
-                    direction.set(RectangularMovement.getDirection(moveDistance, currentCoordinates, currentDirection, box));
-                    coordinates.set(RectangularMovement.move(moveDistance, currentCoordinates, currentDirection));
+                    Direction directionToMoveTo = RectangularMovement.getDirection(moveDistance, currentCoordinates, currentDirection, box);
+                    Coordinates coordinatesToMoveTo = RectangularMovement.move(moveDistance, currentCoordinates, directionToMoveTo);
+
+                    if (!RectangularMovement.isWithinBox(coordinatesToMoveTo, box)) {
+                        throw new MovementException(currentDirection, currentCoordinates, directionToMoveTo, coordinatesToMoveTo, box);
+                    }
+
+                    direction.set(directionToMoveTo);
+                    coordinates.set(coordinatesToMoveTo);
                 })
                 .doOnCancel(() -> log.info("Movement of robot " + name + " cancelled"))
                 .subscribe();
