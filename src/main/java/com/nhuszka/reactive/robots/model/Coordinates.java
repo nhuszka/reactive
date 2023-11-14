@@ -1,5 +1,8 @@
-package com.nhuszka.reactive.robots;
+package com.nhuszka.reactive.robots.model;
 
+import lombok.Data;
+
+@Data
 public final class Coordinates {
 
     private final int x;

@@ -1,4 +1,4 @@
-package com.nhuszka.reactive.robots;
+package com.nhuszka.reactive.robots.model;
 
 public class Box {
     private final Coordinates topLeft;

@@ -1,7 +1,9 @@
 package com.nhuszka.reactive.robots;
 
 import com.nhuszka.reactive.robots.exception.MovementException;
-import lombok.extern.slf4j.Slf4j;
+import com.nhuszka.reactive.robots.model.Box;
+import com.nhuszka.reactive.robots.model.Coordinates;
+import com.nhuszka.reactive.robots.model.Direction;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 
@@ -9,7 +11,8 @@ import java.time.Duration;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 
-@Slf4j
+// TODO fix lombok issue "java: package org.slf4j does not exist"
+//@Slf4j
 public class RobotRectangular {
 
     private final Logger log = Logger.getLogger(RobotRectangular.class.getSimpleName());
@@ -49,6 +52,7 @@ public class RobotRectangular {
                     direction.set(directionToMoveTo);
                     coordinates.set(coordinatesToMoveTo);
                 })
+                .doOnError(throwable -> log.info("Error when moving robot: " + throwable.getMessage()))
                 .doOnCancel(() -> log.info("Movement of robot " + name + " cancelled"))
                 .subscribe();
     }

@@ -1,6 +1,10 @@
 package com.nhuszka.reactive.robots;
 
-import static com.nhuszka.reactive.robots.Direction.*;
+import com.nhuszka.reactive.robots.model.Box;
+import com.nhuszka.reactive.robots.model.Coordinates;
+import com.nhuszka.reactive.robots.model.Direction;
+
+import static com.nhuszka.reactive.robots.model.Direction.*;
 
 public class RectangularMovement {
 

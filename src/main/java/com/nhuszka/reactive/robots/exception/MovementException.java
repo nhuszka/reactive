@@ -1,8 +1,8 @@
 package com.nhuszka.reactive.robots.exception;
 
-import com.nhuszka.reactive.robots.Box;
-import com.nhuszka.reactive.robots.Coordinates;
-import com.nhuszka.reactive.robots.Direction;
+import com.nhuszka.reactive.robots.model.Box;
+import com.nhuszka.reactive.robots.model.Coordinates;
+import com.nhuszka.reactive.robots.model.Direction;
 import lombok.Data;
 
 @Data

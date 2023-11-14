@@ -1,5 +1,8 @@
 package com.nhuszka.reactive.robots;
 
+import com.nhuszka.reactive.robots.model.Box;
+import com.nhuszka.reactive.robots.model.Coordinates;
+import com.nhuszka.reactive.robots.model.Direction;
 import com.nhuszka.reactive.util.Util;
 import reactor.core.publisher.Flux;
 
@@ -21,7 +24,7 @@ public class Main {
 
         // TODO handle case, when robot is started with a wrong position-direction combination. Like x=0, y=0, direction=EAST
         //      it would work for counter-clockwise, but the robot wants to move clockwise -> would generate exception
-        RobotRectangular robotRectangular = new RobotRectangular("fastRobot", robotCoordinates, Direction.NORTH, box, 1000, 1);
+        RobotRectangular robotRectangular = new RobotRectangular("fastRobot", robotCoordinates, Direction.EAST  , box, 100, 1);
         robotRectangular.startMoving();
 
         Flux.interval(Duration.ofMillis(1000))
