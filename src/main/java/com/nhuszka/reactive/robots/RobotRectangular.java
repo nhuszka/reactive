@@ -26,6 +26,7 @@ public class RobotRectangular {
     private final int moveDistance;
     private Disposable movement;
     private final Flux<Long> movementTimer;
+    private final Flux<Coordinates> coordinatesFlux;
 
     public RobotRectangular(String name, Coordinates startingCoordinates, Direction initialDirection, Box box, int movePerMillis, int moveDistance) {
         this.name = name;
@@ -34,10 +35,7 @@ public class RobotRectangular {
         this.box = box;
         this.moveDistance = moveDistance;
         this.movementTimer = Flux.interval(Duration.ofMillis(movePerMillis));
-    }
-
-    public void startMoving() {
-        movement = movementTimer
+        this.coordinatesFlux = movementTimer
                 .doOnNext(timeToMove -> {
                     Direction currentDirection = direction.get();
                     Coordinates currentCoordinates = coordinates.get();
@@ -52,6 +50,11 @@ public class RobotRectangular {
                     direction.set(directionToMoveTo);
                     coordinates.set(coordinatesToMoveTo);
                 })
+                .map(timeToMove -> coordinates.get());
+    }
+
+    public void startMoving() {
+        movement = coordinatesFlux
                 .doOnError(throwable -> log.info("Error when moving robot: " + throwable.getMessage()))
                 .doOnCancel(() -> log.info("Movement of robot " + name + " cancelled"))
                 .subscribe();
@@ -64,7 +67,7 @@ public class RobotRectangular {
     }
 
     private boolean isMovementStopped() {
-        return movement.isDisposed();
+        return movement == null || movement.isDisposed();
     }
 
     public void stopMoving() {

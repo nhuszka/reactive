@@ -14,32 +14,50 @@ public class Main {
     private static Logger log = Logger.getLogger(Main.class.getSimpleName());
 
     public static void main(String[] args) {
-        Coordinates topLeft = new Coordinates(0, 10);
-        Coordinates topRight = new Coordinates(10, 10);
-        Coordinates bottomRight = new Coordinates(10, 0);
-        Coordinates bottomLeft = new Coordinates(0, 0);
-
-        Box box = new Box(topLeft, topRight, bottomRight, bottomLeft);
-        Coordinates robotCoordinates = new Coordinates(0, 0);
-
+        Box box1 = new Box(
+                new Coordinates(0, 10),
+                new Coordinates(10, 10),
+                new Coordinates(10, 0),
+                new Coordinates(0, 0)
+        );
+        Coordinates startCoordinates1 = new Coordinates(0, 0);
         // TODO handle case, when robot is started with a wrong position-direction combination. Like x=0, y=0, direction=EAST
         //      it would work for counter-clockwise, but the robot wants to move clockwise -> would generate exception
-        RobotRectangular robotRectangular = new RobotRectangular("fastRobot", robotCoordinates, Direction.NORTH, box, 1000, 1);
-        robotRectangular.startMoving();
+        RobotRectangular fastRobot1 = new RobotRectangular("fastRobot", startCoordinates1, Direction.NORTH, box1, 1000, 1);
 
-        Flux.interval(Duration.ofMillis(1000))
-                .map(timeToPollPosition -> robotRectangular.getCurrentPosition())
-                .subscribe(position -> System.out.printf("poll position [x: %d, y: %d]%n", position.getX(), position.getY()));
+        Box box2 = new Box(
+                new Coordinates(-10, 0),
+                new Coordinates(0, 0),
+                new Coordinates(0, -10),
+                new Coordinates(-10, -10)
+        );
+        Coordinates startCoordinates2 = new Coordinates(-10, -10);
+        // TODO handle case, when robot is started with a wrong position-direction combination. Like x=0, y=0, direction=EAST
+        //      it would work for counter-clockwise, but the robot wants to move clockwise -> would generate exception
+        RobotRectangular fastRobot2 = new RobotRectangular("fastRobot", startCoordinates2, Direction.NORTH, box2, 1000, 1);
 
-        robotRectangular.coordinatesFeed()
+//        Flux.interval(Duration.ofMillis(1000))
+//                .map(timeToPollPosition -> fastRobot1.getCurrentPosition())
+//                .subscribe(position -> System.out.printf("poll position [x: %d, y: %d]%n", position.getX(), position.getY()));
+
+        fastRobot1.startMoving();
+        fastRobot1.coordinatesFeed()
                 .subscribe(
-                        position -> log.info(String.format("observe coordinates [x: %d, y: %d]%n", position.getX(), position.getY()))
+                        position -> log.info(String.format("observe coordinates robot1 [x: %d, y: %d]%n", position.getX(), position.getY()))
                 );
 
-        Util.waitFor(5);
+        Util.waitForMillis(500);
 
+        fastRobot2.startMoving();
+        fastRobot2.coordinatesFeed()
+                .subscribe(
+                        position -> log.info(String.format("observe coordinates robot2 [x: %d, y: %d]%n", position.getX(), position.getY()))
+                );
+
+        Util.waitFor(10);
         log.info("Stopping robot.");
-        robotRectangular.stopMoving();
+        fastRobot1.stopMoving();
+        fastRobot2.stopMoving();
 
         log.info("Waiting for program to finish.");
         Util.waitFor(5);
