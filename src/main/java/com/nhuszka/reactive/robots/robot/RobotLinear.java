@@ -7,7 +7,7 @@ import com.nhuszka.reactive.robots.geometry.Line;
 
 import java.util.function.Consumer;
 
-public class RobotLinear extends AbstractRobot {
+public class RobotLinear extends Robot {
 
     private final Line line;
 

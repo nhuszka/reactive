@@ -7,7 +7,7 @@ import com.nhuszka.reactive.robots.geometry.Direction;
 
 import java.util.function.Consumer;
 
-public class RobotRectangular extends AbstractRobot {
+public class RobotRectangular extends Robot {
 
     private final Box box;
 

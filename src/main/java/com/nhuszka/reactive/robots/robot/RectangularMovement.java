@@ -6,7 +6,7 @@ import com.nhuszka.reactive.robots.geometry.Direction;
 
 import static com.nhuszka.reactive.robots.geometry.Direction.*;
 
-public class RectangularMovement {
+class RectangularMovement {
 
     static boolean isWithinBox(Coordinates coordinate, Box box) {
         return coordinate.getX() >= box.getBottomLeft().getX()

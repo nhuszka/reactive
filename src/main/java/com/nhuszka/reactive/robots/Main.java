@@ -1,5 +1,6 @@
 package com.nhuszka.reactive.robots;
 
+import com.nhuszka.reactive.robots.robot.Robot;
 import com.nhuszka.reactive.robots.robot.RobotLinear;
 import com.nhuszka.reactive.robots.robot.RobotRectangular;
 import com.nhuszka.reactive.robots.geometry.Box;
@@ -24,7 +25,7 @@ public class Main {
         Coordinates startCoordinates1 = new Coordinates(2, 2);
         // TODO handle case, when robot is started with a wrong position-direction combination. Like x=2, y=2, direction=EAST
         //      it would work for counter-clockwise, but the robot wants to move clockwise -> would generate exception
-        RobotRectangular fastRobot1 = new RobotRectangular("fastRobot1", startCoordinates1, Direction.NORTH, box1, 1000, 1);
+        Robot fastRobot1 = new RobotRectangular("fastRobot1", startCoordinates1, Direction.NORTH, box1, 1000, 1);
 
         Box box2 = new Box(
                 new Coordinates(-12, 2),
@@ -35,7 +36,7 @@ public class Main {
         Coordinates startCoordinates2 = new Coordinates(-12, -2);
         // TODO handle case, when robot is started with a wrong position-direction combination. Like x=-12, y=-12, direction=EAST
         //      it would work for counter-clockwise, but the robot wants to move clockwise -> would generate exception
-        RobotRectangular fastRobot2 = new RobotRectangular("fastRobot2", startCoordinates2, Direction.EAST, box2, 1000, 1);
+        Robot fastRobot2 = new RobotRectangular("fastRobot2", startCoordinates2, Direction.EAST, box2, 1000, 1);
 
         Line line = new Line(
                 new Coordinates(-7, 0),
@@ -44,7 +45,7 @@ public class Main {
         Coordinates startCoordinatesLinear = new Coordinates(-7, -7);
         // TODO handle case, when robot is started with a wrong position-direction combination. Like x=0, y=0, direction=EAST
         //      it would work for counter-clockwise, but the robot wants to move clockwise -> would generate exception
-        RobotLinear linearRobot = new RobotLinear("linearRobot", startCoordinatesLinear, Direction.EAST, line, 500, 1);
+        Robot linearRobot = new RobotLinear("linearRobot", startCoordinatesLinear, Direction.EAST, line, 500, 1);
 
 //        Flux.interval(Duration.ofMillis(1000))
 //                .map(timeToPollPosition -> fastRobot1.getCurrentPosition())

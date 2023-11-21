@@ -10,9 +10,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
-public abstract class AbstractRobot {
+public abstract class Robot {
 
-    private final Logger log = Logger.getLogger(AbstractRobot.class.getSimpleName());
+    private final Logger log = Logger.getLogger(Robot.class.getSimpleName());
 
     private final String name;
     protected final AtomicReference<Coordinates> coordinates;
@@ -22,7 +22,7 @@ public abstract class AbstractRobot {
     private final Flux<Coordinates> coordinatesFlux;
     private Disposable movement;
 
-    public AbstractRobot(String name, Coordinates startingCoordinates, Direction initialDirection, int moveDistance, int movePerMillis) {
+    public Robot(String name, Coordinates startingCoordinates, Direction initialDirection, int moveDistance, int movePerMillis) {
         this.name = name;
         this.coordinates = new AtomicReference<>(startingCoordinates);
         this.direction = new AtomicReference<>(initialDirection);
