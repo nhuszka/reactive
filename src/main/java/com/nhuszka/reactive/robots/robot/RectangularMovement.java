@@ -1,10 +1,10 @@
-package com.nhuszka.reactive.robots;
+package com.nhuszka.reactive.robots.robot;
 
-import com.nhuszka.reactive.robots.model.Box;
-import com.nhuszka.reactive.robots.model.Coordinates;
-import com.nhuszka.reactive.robots.model.Direction;
+import com.nhuszka.reactive.robots.geometry.Box;
+import com.nhuszka.reactive.robots.geometry.Coordinates;
+import com.nhuszka.reactive.robots.geometry.Direction;
 
-import static com.nhuszka.reactive.robots.model.Direction.*;
+import static com.nhuszka.reactive.robots.geometry.Direction.*;
 
 public class RectangularMovement {
 
@@ -13,26 +13,6 @@ public class RectangularMovement {
                 && coordinate.getX() <= box.getBottomRight().getX()
                 &&  coordinate.getY() >= box.getBottomLeft().getY()
                 &&  coordinate.getY() <= box.getTopLeft().getY();
-    }
-
-    static Coordinates move(int distance, Coordinates coordinates, Direction direction) {
-        int x = coordinates.getX();
-        int y = coordinates.getY();
-        switch (direction) {
-            case NORTH:
-                y += distance;
-                break;
-            case SOUTH:
-                y -= distance;
-                break;
-            case EAST:
-                x += distance;
-                break;
-            case WEST:
-                x -= distance;
-                break;
-        }
-        return new Coordinates(x, y);
     }
 
     static Direction getDirection(int distanceToMove, Coordinates coordinates, Direction direction, Box box) {

@@ -1,4 +1,4 @@
-package com.nhuszka.reactive.robots.model;
+package com.nhuszka.reactive.robots.geometry;
 
 public enum Direction {
     NORTH,
